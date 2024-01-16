@@ -15,13 +15,13 @@ import { log } from "console";
 
 // generateError('An error occurred!', 404);
 
-class Department {
+abstract class Department {
   static fiscalYear = 2024;
   // private readonly id: string;
   // public name: string;
   protected employees: string[] = [];
 
-  constructor(private readonly id: string, public name: string) {
+  constructor(protected readonly id: string, public name: string) {
     // this.name = n
   }
 
@@ -29,9 +29,8 @@ class Department {
     return {name: name}
   }
 
-  describe(this: Department) {
-    console.log(`Department (${this.id}) : ${this.name}`); 
-  }
+  abstract describe(this: Department): void;
+
   addEmployee(employee: string) {
     this.employees.push(employee) 
   }
@@ -49,6 +48,9 @@ class ITDepartment extends Department {
     super(id, 'IT')
     this.admins = admins;
   }
+  describe() {
+     console.log('IT department - ID: ' + this.id);
+  };
 }
 
 class AccountingDepartment extends Department {
@@ -72,6 +74,11 @@ class AccountingDepartment extends Department {
     super(id, 'Accounting')
     this.lastReport = reports[0]
   }
+
+  describe() {
+    console.log('Accounting department - ID: ' + this.id); 
+  }
+  
   addReport(text: string) {
     this.reports.push(text)
     this.lastReport = text;
@@ -111,7 +118,8 @@ console.log(accounting.mostRecentReport);
 accounting.addEmployee('Maxu')
 accounting.addEmployee('Manu')
 
-accounting.getReports()
-accounting.printEmployeeInformation()
+// accounting.getReports()
+// accounting.printEmployeeInformation()
+accounting.describe()
 
 
