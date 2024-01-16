@@ -16,12 +16,17 @@ import { log } from "console";
 // generateError('An error occurred!', 404);
 
 class Department {
+  static fiscalYear = 2024;
   // private readonly id: string;
   // public name: string;
   protected employees: string[] = [];
 
   constructor(private readonly id: string, public name: string) {
     // this.name = n
+  }
+
+  static createEmployee(name: string) {
+    return {name: name}
   }
 
   describe(this: Department) {
@@ -81,6 +86,9 @@ class AccountingDepartment extends Department {
     this.employees.push(name)
   }
 }
+const employee1 = Department.createEmployee('Terro')
+console.log(employee1, Department.fiscalYear);
+
 
 const it = new ITDepartment('d1', ['Maxym adm'])
 
