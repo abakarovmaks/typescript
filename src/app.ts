@@ -1,6 +1,8 @@
 // let userInput: unknown;
 // let userName: string;
 
+import { log } from "console";
+
 // userInput = 5;
 // userInput = 'Max';
 // if (typeof userInput === 'string') {
@@ -16,7 +18,7 @@
 class Department {
   // private readonly id: string;
   // public name: string;
-  private employees: string[] = [];
+  protected employees: string[] = [];
 
   constructor(private readonly id: string, public name: string) {
     // this.name = n
@@ -33,12 +35,55 @@ class Department {
     console.log(this.employees); 
   }
 }
-const accounting = new Department('d1','Accounting')
-accounting.addEmployee('Max')
-accounting.addEmployee('Vita')
 
-// accounting.employees[2] = 'Anna'
 
-accounting.describe()
+
+class ITDepartment extends Department {
+  admins: string[]
+  constructor(id: string, admins: string[]) {
+    super(id, 'IT')
+    this.admins = admins;
+  }
+}
+
+class AccountingDepartment extends Department {
+  constructor(id: string, private reports: string[]) {
+    super(id, 'Accounting')
+  }
+  addReport(text: string) {
+    this.reports.push(text)
+  }
+  getReports() {
+    console.log(this.reports);
+  }
+  addEmployees(name: string) {
+    if (this.name === 'Max') {
+      return;
+    }
+    this.employees.push(name)
+  }
+}
+
+const it = new ITDepartment('d1', ['Maxym adm'])
+
+it.addEmployee('Max')
+it.addEmployee('Vita')
+
+// it.employees[2] = 'Anna'
+
+it.describe()
+it.name = 'NEW NAME'
+it.printEmployeeInformation()
+
+console.log(it);
+
+const accounting = new AccountingDepartment('d2', []);
+accounting.addReport('Something went wrong...')
+
+accounting.addEmployee('Maxu')
+accounting.addEmployee('Manu')
+
+accounting.getReports()
 accounting.printEmployeeInformation()
+
 
