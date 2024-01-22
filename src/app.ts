@@ -37,6 +37,14 @@ function addCombinable(a: Combinable2, b: Combinable2) {
 const result = addCombinable('Max', ' Abakarov');
 result.split(' ')
 
+const fetchedUserData = {
+    id: 'u1',
+    name: 'Max',
+    job: { title: 'CEO', description: 'My own company' }
+}
+console.log(fetchedUserData?.job?.title);
+
+
 // type UnknownEmployee = Employee | Admin;
 
 // function printEmployeeInformation(emp: UnknownEmployee) {
