@@ -8,14 +8,17 @@ function Logger(logString: string) {
 }
 
 function WithTemplate(template: string, hookId: string) {
-    return function (constructor: any) {
-        console.log('TEMPLATE FACTORY');
-
-        const hookEl = document.getElementById(hookId)
-        const p = new constructor();
-        if (hookEl) {
-            hookEl.innerHTML = template;
-            hookEl.querySelector('h1')!.textContent = p.name
+    return function<T extends {new(...args: any[]): {name: string}}>(originalConstructor: T) {
+        return class extends originalConstructor {
+            constructor(...args: any[]) {
+                super()
+                console.log('TEMPLATE FACTORY');
+                const hookEl = document.getElementById(hookId)
+                if (hookEl) {
+                    hookEl.innerHTML = template;
+                     hookEl.querySelector('h1')!.textContent = this.name
+                }
+            }
         }
     }
 }
@@ -30,8 +33,8 @@ class Person2 {
     }
 }
 
-const pers = new Person2();
-console.log(pers);
+// const pers = new Person2();
+// console.log(pers);
 
 // -----
 
@@ -86,3 +89,6 @@ class Product {
         return this._price * (1 + tax);
     }
 }
+
+const p1 = new Product('Book 1', 19)
+const p2 = new Product('Book 2', 20)
